@@ -1,1 +1,1 @@
-Apparently i completly broke the server/hosting script with the new update so fixing that now
+Should be all fixxed need to add more configuration
