@@ -3,26 +3,39 @@ import socket
 import random
 import threading
 import subprocess
-
-
+import platform
+os = platform.system()
 #basic grabbing the ip to host the server on local machine but the server is public
 
 
 #MacOS version
-iplist = subprocess.run(["ifconfig | grep 'inet ' | awk '{print $2}'"], capture_output=True, text=True, shell=True)
-iplines = iplist.stdout.splitlines()
-print(len(iplines))
-ip = iplines[1]
-ipconfig1 = iplines[0]
-print(ipconfig1)
-print(ip)
+def macip():
+    global ip
+    iplist = subprocess.run(["ifconfig | grep 'inet ' | awk '{print $2}'"], capture_output=True, text=True, shell=True)
+    iplines = iplist.stdout.splitlines()
+    print(len(iplines))
+    ip = iplines[1]
+    ipconfig1 = iplines[0]
+    print(ipconfig1)
+    print(ip)
 
 #Windows version
-
+def windowsip():
+    global ip
+    iplines = subprocess.run(["ipconfig"], capture_output=True, shell=True, text=True)
+    iplist = iplines.stdout.splitlines()
+    ipline = iplist[16]
+    ip = ipline[-14:]
+    print(ip)
 
 #Handles all the people connected to the server
 connected = []
-
+if os == "Windows":
+    windowsip()
+elif os == "MacOS":
+    macip()
+else:
+    print("Unknown operating system")
 def handle_client(client_socket, addr):
     print(f"Connection by {addr}")
     connected.append(client_socket)
