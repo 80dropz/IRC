@@ -1,1 +1,1 @@
-Should be all fixxed need to add more configuration
+Just realised i added windows support when i was home and never published it
